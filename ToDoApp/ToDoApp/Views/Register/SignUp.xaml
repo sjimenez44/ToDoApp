@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="ToDoApp.Views.Register.SignUp">
+    <ContentPage.Content>
+        <Grid Margin="20,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0"
+                         Orientation="Horizontal"
+                         Spacing="24">
+                <Image Source="Back.png" HeightRequest="32">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BackCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label Text="Sign Up"
+                       TextColor="Black"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       VerticalTextAlignment="Center"
+                       VerticalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1"
+                         Spacing="12">
+                <StackLayout>
+                    <Label Text="Full Name" TextColor="Black" FontSize="16" FontAttributes="Bold" />
+                    <Entry Placeholder="Enter your full name" ClearButtonVisibility="WhileEditing" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Email" TextColor="Black" FontSize="16" FontAttributes="Bold" />
+                    <Entry Placeholder="Enter your email" ClearButtonVisibility="WhileEditing" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Password" TextColor="Black" FontSize="16" FontAttributes="Bold" />
+                    <Entry Placeholder="Enter your password" ClearButtonVisibility="WhileEditing" IsPassword="True" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Confirm Password" TextColor="Black" FontSize="16" FontAttributes="Bold" />
+                    <Entry Placeholder="Confirm password" ClearButtonVisibility="WhileEditing" IsPassword="True" />
+                </StackLayout>
+                <StackLayout Margin="40,32,40,0"
+                             Spacing="16">
+                    <Button Text="Register"
+                            TextColor="White"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            CornerRadius="16"
+                            Command="{Binding SignupCommand}"
+                            BackgroundColor="Black"/>
+                    <Label Text="Already have an account? Login"
+                           TextColor="Black"
+                           FontSize="16"
+                           HorizontalTextAlignment="Center"
+                           TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LoginCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

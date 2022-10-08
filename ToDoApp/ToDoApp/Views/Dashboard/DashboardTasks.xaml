@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="ToDoApp.Views.Dashboard.DashboardTasks">
+    <Grid Margin="10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="160" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- User Information -->
+        <StackLayout Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="0" Source="UserProfile.png" HeightRequest="60">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToProfileCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <StackLayout Grid.Column="1">
+                    <Label Text="Hello"
+                               TextColor="#787878"
+                               FontSize="24"
+                               FontAttributes="Bold"/>
+                    <Label Text="Jhon"
+                               TextColor="Black"
+                               FontSize="24"
+                               FontAttributes="Bold"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+        
+        <!-- Date Information -->
+        <StackLayout Grid.Row="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                           Text="Octubre 02 - 08"
+                           TextColor="Black"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="StartAndExpand"
+                           VerticalOptions="Center"/>
+                <StackLayout Grid.Column="1"
+                             Spacing="20"
+                             Orientation="Horizontal"
+                             HorizontalOptions="End">
+                    <Image Source="LTBtn.png" HeightRequest="48">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LastWeekCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Image Source="GTBtn.png" HeightRequest="48">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NextWeekCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+
+        <!-- Task of Projects -->
+        <StackLayout Grid.Row="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                               Text="Tareas"
+                               TextColor="Black"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="StartAndExpand"
+                               VerticalOptions="Center"/>
+                <Label Grid.Column="1"
+                               Text="Todos los proyectos"
+                               TextColor="Black"
+                               TextDecorations="Underline"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AllProjectsCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </StackLayout>
+
+        <!-- List of Task in specific Date -->
+        <CollectionView Grid.Row="3" ItemsSource="{Binding Tasks}"
+                        x:Name="ListTasks">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 VerticalItemSpacing="4"
+                                 Span="1" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem IconImageSource="Delete.png"
+                                           BackgroundColor="Black"
+                                           CommandParameter="{Binding .}"
+                                           Command="{Binding Path=BindingContext.DeleteTaskcommand,Source={x:Reference ListTasks}}"/>
+                                <SwipeItem IconImageSource="Edit.png"
+                                           BackgroundColor="Black"
+                                           CommandParameter="{Binding .}"
+                                           Command="{Binding Path=BindingContext.EditTaskcommand,Source={x:Reference ListTasks}}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout>
+                                    <Image IsVisible="{Binding Status}"
+                                           Source="Checked.png"
+                                           HeightRequest="48">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="2"
+                                                                  CommandParameter="{Binding .}"
+                                                                  Command="{Binding Path=BindingContext.ChangeStatusTaskcommand,Source={x:Reference ListTasks}}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                                <StackLayout VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" TextColor="Black" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <BoxView Color="{Binding Project.Color}"
+                                                 HeightRequest="16"
+                                                 WidthRequest="8" />
+                                        <Label Text="{Binding Project.Name}"
+                                               VerticalOptions="Center"
+                                               TextColor="Black" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <StackLayout HorizontalOptions="CenterAndExpand" 
+                                     VerticalOptions="CenterAndExpand">
+                        <Label Text="All clear"
+                                   TextColor="Black"
+                                   Margin="10,25,10,10"
+                                   FontAttributes="Bold"
+                                   FontSize="24"
+                                   HorizontalOptions="Fill"
+                                   HorizontalTextAlignment="Center" />
+                        <Label Text="Looks like you don't have any"
+                                   FontAttributes="Italic"
+                                   FontSize="16"
+                                   HorizontalOptions="Fill"
+                                   HorizontalTextAlignment="Center" />
+                        <Label Text="tasks for this day"
+                                   FontAttributes="Italic"
+                                   FontSize="16"
+                                   HorizontalOptions="Fill"
+                                   HorizontalTextAlignment="Center" />
+                    </StackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+</ContentPage>
